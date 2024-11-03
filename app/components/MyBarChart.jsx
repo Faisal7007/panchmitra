@@ -1,33 +1,23 @@
-// components/MyBarChart.js
-'use client'; // To ensure it runs on the client side
+
+'use client'; 
 
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend } from 'chart.js';
-import { FaRupeeSign } from "react-icons/fa";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-// Register Chart.js modules (needed for react-chartjs-2 to work correctly)
-ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
+
+ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend, ChartDataLabels);
 
 const MyBarChart = () => {
   const data = {
-    labels: ['8,000,000', '4,000,000', '12,000,000', '4,700,000'],
+    labels: ['₹8,000,000', '₹4,000,000', '₹12,000,000', '₹4,700,000'],
     datasets: [
       {
         label: 'Revenue and profit analysis for 1,000,000 Bottles',
         data: [0.8, 0.4, 1.2, 0.47],
-        backgroundColor: [
-          'blue',
-          'red',
-          'green',
-          'yellow'
-        ],
-        borderColor: [
-         'blue',
-          'red',
-          'green',
-          'yellow'
-        ],
+        backgroundColor: ['#024CAA', '#FF8A8A', '#347928', '#F3C623'],
+        borderColor: ['#024CAA', '#FF8A8A', '#347928', '#F3C623'],
         borderWidth: 1,
       },
     ],
@@ -35,31 +25,68 @@ const MyBarChart = () => {
 
   const options = {
     responsive: true,
+    layout: {
+      margin: {
+        top: 100, 
+      }
+    },
     scales: {
+      x: {
+        display: false, 
+      },
       y: {
-        beginAtZero: true, // Start y-axis from zero
-        min: 0, // Minimum value for y-axis
-        max: 1.2, // Maximum value for y-axis
+        beginAtZero: true,
+        min: 0,
+        max: 1.6,
         ticks: {
-          stepSize: .2, // Interval between values
-          callback: (value) => value.toFixed(1), // Custom labels if needed
+          stepSize: 0.2,
+          callback: (value) => value.toFixed(1),
         },
-        
         title: {
-            display: true, // Display the title
-            text: "Amount in ₹", // Your title text
-            font: {
-              size: 14, // Font size of the title
-              family: 'Arial', // Font family of the title
-            },
+          display: true,
+          text: 'Amount in ₹',
+          font: {
+            size: 14,
+            family: 'Arial',
+          },
+        },
       },
     },
-  }
-}
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          boxWidth: 0, 
+          padding: 10, 
+        },
+      },
 
-  return  <div className="chart-container mt-20">
-  <Bar data={data} options={options} />
-</div>
+      tooltip: {
+        callbacks: {
+          title: () => '', 
+          label: (context) => `Value: ₹${(context.raw * 1000000).toLocaleString()}`
+        },
+      },
+      datalabels: {
+        anchor: 'end',
+        align: 'top',
+        formatter: (value, context) => {
+          
+          return `₹${(value * 1000000).toLocaleString()}`;
+        },
+        font: {
+          size: 12,
+        },
+        color: '#000', 
+      },
+    },
+  };
+
+  return (
+    <div className="chart-container mt-20">
+      <Bar data={data} options={options} />
+    </div>
+  );
 };
 
 export default MyBarChart;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const RevenueComp = ({perc,title,description_one,description_two}) => {
-   // Example percentage value
+   
 const background = perc
   ? `conic-gradient(#7CF5FF 0deg ${perc * 3.6}deg, #0d2a13 ${perc * 3.6}deg 360deg)`
   : '';

@@ -12,6 +12,7 @@
     "@chakra-ui/react": "^3.0.2",
     "@emotion/react": "^11.13.3",
     "chart.js": "^4.4.6",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "next": "15.0.2",
     "next-themes": "^0.3.0",
     "react": "^18.3.1",
